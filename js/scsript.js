@@ -1,56 +1,33 @@
-function verificar(){
-    var data = new Date()
-    var ano = data.getFullYear()
-    var fAno = document.getElementById('txtano')
-    var res = document.querySelector('div#res')
+function contar(){
+    var numInicial = document.getElementById('numeroInicial')
+    var numLimite = document.getElementById('numeroLimite')
+    var multi = document.getElementById('multiplicador')
+    var res = document.getElementById('res')
 
-    if (fAno.value.length == 0 || fAno.value > ano){
-        window.alert('[ERRO] Verifique os dados e tente novamente!') 
-    }else{
-       var fsex = document.getElementsByName('radsex')
-       var idade = ano - Number(fAno.value)
-       var genero = ''
-       var img = document.createElement('img')
-       img.setAttribute('id', 'foto')
-       if(fsex[0].checked){
-           genero = 'Homem'
-           if(idade>=0 && idade < 10){
-               //criança
-               img.setAttribute('src', 'img/menino.png')
-           }else if(idade<15){
-               //adolescente
-               img.setAttribute('src', 'img/adolescente-menino.png')
-           }else if(idade<20){
-               //jovem
-               img.setAttribute('src', 'img/jovem-homem.png')
-           }else if(idade<50){
-               //adulto
-               img.setAttribute('src', 'img/homem.png')
-           }else{
-               //idoso
-               img.setAttribute('src', 'img/idoso.png')
-           }
-       }else{
-           genero = 'Mulher'
-           if(idade>=0 && idade < 10){
-                //criança
-                img.setAttribute('src', 'img/menina.png')
-            }else if(idade<15){
-                //adolescente
-                img.setAttribute('src', 'img/adolescente-mulher.png')
-            }else if(idade<20){
-                //jovem
-                img.setAttribute('src', 'img/jovem-mulher.png')
-            }else if(idade<50){
-                //adulto
-                img.setAttribute('src', 'img/mulher.png')
-            }else{
-                //idoso
-                img.setAttribute('src', 'img/idosa.png')
+    if(numInicial.value.length == 0 || numLimite.value.length == 0 || multi.value.length == 0 ){
+        res.innerHTML = 'Impossível contar!'
+        window.alert('[ERRO] Preencha todos os dados!')
+    } else {
+        res.innerHTML = 'Contando: <br>'
+        let inicio = Number(numInicial.value)
+        let digito = Number(multi.value)
+        let limite = Number(numLimite.value)
+        if(digito <=0){
+            window.alert('Passo inválido! Considerando passo 1!')
+            digito = 1
+        } else if(numInicial.value.length < numLimite.value.length){
+            
+            for(let c = inicio; c<=limite; c += digito){
+                res.innerHTML += `${c} \u{1F449}`   
             }
-       }
-       res.style.textAlign = 'center'
-       res.innerHTML = `${genero} com ${idade} anos.<br/>`
-       res.appendChild(img)
+
+        } else{
+            for(let c = inicio; c >= limite; c-= digito){
+                res.innerHTML += `${c} \u{1F449}`
+            } 
+        }
+        res.innerHTML += `\u{1f3c1}`
+        
     }
+    
 }
